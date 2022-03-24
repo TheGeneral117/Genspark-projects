@@ -26,7 +26,7 @@ public class Main {
                 if(choice == 1 || choice == 2)
                     inputAccepted = true;
             } catch (NumberFormatException e) {
-
+                System.out.println("Invalid input" + choice);
             }
         }
 
