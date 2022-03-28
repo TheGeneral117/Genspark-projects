@@ -17,6 +17,7 @@ class MainTest {
         assertNull(test.setInt("not a number"));
         assertEquals(-5,test.setInt("-5"));
         assertEquals(5,test.setInt("5"));
+        assertNotEquals(5,test.setInt("4"));
     }
 
     @Test
