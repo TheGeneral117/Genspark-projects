@@ -2,6 +2,17 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
+    // Methods
+    public static Object setInt(String input){
+        int num=0;
+        try {
+            num = Integer.valueOf(input);
+            return num;
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
     public static void main(String[] args) {
         //variable declaration
         int choice=0;
@@ -19,12 +30,12 @@ public class Main {
         System.out.println("is greedy and hungry and will eat you on sight.");
 
         //make sure user gives valid input
-        while (!inputAccepted) {
+        while (true) {
             try {
                 System.out.println("Which cave will you go into? (1 or 2)");
                 choice = Integer.valueOf(scanner.nextLine());
                 if(choice == 1 || choice == 2)
-                    inputAccepted = true;
+                    break;
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input" + choice);
             }

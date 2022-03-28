@@ -1,3 +1,4 @@
+import java.io.Console;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -41,11 +42,11 @@ public class Main {
 
                     System.out.println("I need a real, whole number.\n");
                 }
-                if(guessNum ==answer)
+                if (guessCheck(answer, guessNum) == "yes")
                     break;
-                else if (guessNum < answer)
+                else if(guessCheck(answer, guessNum) == "low")
                     System.out.println("Your guess is too low.");
-                else if (guessNum > answer)
+                else if (guessCheck(answer, guessNum) == "high")
                     System.out.println("Your guess is too high.");
             }
             //check if player guessed too much or won
@@ -64,6 +65,16 @@ public class Main {
     }
 
     //      METHODS
+
+    public static String guessCheck(int answer, int guessNum) {
+        if(guessNum == answer)
+            return "yes";
+        else if (guessNum < answer)
+            return "low";
+        else
+            return "high";
+    }
+
     public static String setString(String input){
         try{
             return input;

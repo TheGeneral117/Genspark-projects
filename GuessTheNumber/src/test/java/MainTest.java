@@ -14,8 +14,15 @@ class MainTest {
 
     @Test
     void setInt() {
-        assertEquals(null,test.setInt("not a number"));
+        assertNull(test.setInt("not a number"));
         assertEquals(-5,test.setInt("-5"));
         assertEquals(5,test.setInt("5"));
+    }
+
+    @Test
+    void guessCheck() {
+        assertEquals("yes",test.guessCheck(5,5));
+        assertEquals("low",test.guessCheck(5,4));
+        assertEquals("high",test.guessCheck(5,6));
     }
 }
