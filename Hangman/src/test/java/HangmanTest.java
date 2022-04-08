@@ -18,7 +18,9 @@ public class HangmanTest {
 
     @Test
     void guessCheck(){
+        assertEquals(6, test.getLives());
         assertFalse(test.guessCheck('a'));
+        assertEquals(5, test.getLives());
         assertFalse(test.guessCheck('t'));
         assertFalse(test.guessCheck('f'));
         assertTrue(test.guessCheck('e'));

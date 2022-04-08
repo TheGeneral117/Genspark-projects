@@ -40,6 +40,10 @@ public class Hangman {
         return correct;
     }
 
+    public int getLives(){
+        return lives;
+    }
+
     public ArrayList<Character> getWrong(){
         return wrong;
     }
@@ -81,5 +85,75 @@ public class Hangman {
         return false;
     }
 
+    public boolean keepPlaying(){
+
+    }
+
+    public void drawHangman() {
+        switch (lives){
+            case 6:
+                System.out.println(""
+                        +"\t|----------\n"
+                        +"\t|\n"
+                        +"\t|\n"
+                        +"\t|\n"
+                        +"\t|\n"
+                        +"\t*************");
+                break;
+            case 5:
+                System.out.println(""
+                        +"\t|----------\n"
+                        +"\t|     O\n"
+                        +"\t|\n"
+                        +"\t|\n"
+                        +"\t|\n"
+                        +"\t*************");
+                break;
+            case 4:
+                System.out.println(""
+                        +"\t|----------\n"
+                        +"\t|     O\n"
+                        +"\t|     |\n"
+                        +"\t|\n"
+                        +"\t|\n"
+                        +"\t*************");
+                break;
+            case 3:
+                System.out.println(""
+                        +"\t|----------\n"
+                        +"\t|     O\n"
+                        +"\t|   \\|\n"
+                        +"\t|\n"
+                        +"\t|\n"
+                        +"\t*************");
+                break;
+            case 2:
+                System.out.println(""
+                        +"\t|----------\n"
+                        +"\t|     O\n"
+                        +"\t|   \\|/\n"
+                        +"\t|\n"
+                        +"\t|\n"
+                        +"\t*************");
+                break;
+            case 1:
+                System.out.println(""
+                        +"\t|----------\n"
+                        +"\t|     O\n"
+                        +"\t|   \\|/\n"
+                        +"\t|    /\n"
+                        +"\t|\n"
+                        +"\t*************");
+                break;
+            default:
+                System.out.println(""
+                        +"\t|----------\n"
+                        +"\t|     O\n"
+                        +"\t|   \\|/\n"
+                        +"\t|    / \\\n"
+                        +"\t|\n"
+                        +"\t*************");
+        }
+    }
 
 }
