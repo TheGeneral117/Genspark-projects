@@ -6,6 +6,7 @@ public class Hangman {
     private String ans;
     private ArrayList<Character> answer = new ArrayList<>();
     private ArrayList<Character> wrong = new ArrayList<>();
+    private ArrayList<Character> used = new ArrayList<>();
     private char[] correct;
     private Random rand = new Random();
     private Scanner scan;
@@ -26,10 +27,10 @@ public class Hangman {
     }
 
     public void setUpGame(){
-        setAnswer();
         answer.clear();
         wrong.clear();
         lives = 6;
+        setAnswer();
     }
 
     public String getAns(){
@@ -46,6 +47,16 @@ public class Hangman {
 
     public ArrayList<Character> getWrong(){
         return wrong;
+    }
+
+    public ArrayList<Character> getUsed(){
+        return used;
+    }
+
+    public boolean checkUsed(Character guess){
+        if(used.contains(guess))
+            return true;
+        return false;
     }
 
     public void setAnswer(String input){
@@ -82,11 +93,13 @@ public class Hangman {
             if(!wrong.contains(guess))
                 wrong.add(guess);
         }
+        if(!used.contains(guess))
+            used.add(guess);
         return false;
     }
 
     public boolean keepPlaying(){
-
+        return false;
     }
 
     public void drawHangman() {

@@ -8,13 +8,14 @@ public class Main {
         Hangman game = new Hangman();
         String guess;
         Scanner scan = new Scanner(System.in);
-        boolean winner = false;
+        boolean winner = false, playing = true;
 
         System.out.println("Welcome to Hangman! Let's play!\n\n");
-        while(true){
+        while(playing){
             game.drawHangman();
             System.out.println("Missed letters:");
             System.out.println(game.getWrong().toString());
+            System.out.println(game.getCorrect());
             System.out.println("Guess a letter");
 
             guess = scan.next().toLowerCase();
@@ -23,9 +24,11 @@ public class Main {
                 System.out.println("Please enter single letters only.");
                 guess = scan.next().toLowerCase();
             }
-            if(game.getWrong().contains(guess))
+            if (game.checkUsed(guess.charAt(0))) {
                 System.out.println("You already tried that letter!");
-            else{
+                System.out.println("Guess another letter");
+            }
+            else {
                 winner = game.guessCheck(guess.charAt(0));
             }
 
@@ -34,6 +37,16 @@ public class Main {
             }
             else if(game.getLives() == 0){
                 System.out.println("You got hanged!");
+            }
+            if(winner || game.getLives() == 0){
+                System.out.println("Would you like to play again? (yes to go again, anything else to quit)");
+                guess = scan.nextLine();
+                if(guess.toLowerCase() != "yes")
+                    playing = false;
+                else{
+                    game.setUpGame();
+                    winner = false;
+                }
             }
 
 
