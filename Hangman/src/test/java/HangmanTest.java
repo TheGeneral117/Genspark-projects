@@ -27,5 +27,7 @@ public class HangmanTest {
         assertEquals('t', test.getCorrect()[0]);
         assertEquals('t', test.getCorrect()[3]);
         assertTrue(test.getWrong().contains('a'));
+        assertTrue(test.getUsed().contains('a'));
+        assertTrue(test.getUsed().contains('t'));
     }
 }

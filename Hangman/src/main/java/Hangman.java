@@ -27,8 +27,8 @@ public class Hangman {
     }
 
     public void setUpGame(){
-        answer.clear();
         wrong.clear();
+        used.clear();
         lives = 6;
         setAnswer();
     }
@@ -61,6 +61,7 @@ public class Hangman {
 
     public void setAnswer(String input){
         ans = input;
+        answer.clear();
         extracted();
     }
 
@@ -75,6 +76,7 @@ public class Hangman {
     public void setAnswer(){
         int random = rand.nextInt(list.size());
         ans = list.get(random);
+        answer.clear();
         extracted();
     }
 
@@ -116,7 +118,7 @@ public class Hangman {
             case 5:
                 System.out.println(""
                         +"\t|----------\n"
-                        +"\t|     O\n"
+                        +"\t|    O\n"
                         +"\t|\n"
                         +"\t|\n"
                         +"\t|\n"
@@ -134,7 +136,7 @@ public class Hangman {
             case 3:
                 System.out.println(""
                         +"\t|----------\n"
-                        +"\t|     O\n"
+                        +"\t|    O\n"
                         +"\t|   \\|\n"
                         +"\t|\n"
                         +"\t|\n"
@@ -143,7 +145,7 @@ public class Hangman {
             case 2:
                 System.out.println(""
                         +"\t|----------\n"
-                        +"\t|     O\n"
+                        +"\t|    O\n"
                         +"\t|   \\|/\n"
                         +"\t|\n"
                         +"\t|\n"
@@ -152,18 +154,18 @@ public class Hangman {
             case 1:
                 System.out.println(""
                         +"\t|----------\n"
-                        +"\t|     O\n"
+                        +"\t|    O\n"
                         +"\t|   \\|/\n"
-                        +"\t|    /\n"
+                        +"\t|   /\n"
                         +"\t|\n"
                         +"\t*************");
                 break;
             default:
                 System.out.println(""
                         +"\t|----------\n"
-                        +"\t|     O\n"
+                        +"\t|    O\n"
                         +"\t|   \\|/\n"
-                        +"\t|    / \\\n"
+                        +"\t|   / \\\n"
                         +"\t|\n"
                         +"\t*************");
         }

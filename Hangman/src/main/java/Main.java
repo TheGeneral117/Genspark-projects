@@ -8,15 +8,18 @@ public class Main {
         Hangman game = new Hangman();
         String guess;
         Scanner scan = new Scanner(System.in);
-        boolean winner = false, playing = true;
+        boolean winner = false, playing = true, next = true;
 
         System.out.println("Welcome to Hangman! Let's play!\n\n");
+        System.out.println(game.getAns());
         while(playing){
-            game.drawHangman();
-            System.out.println("Missed letters:");
-            System.out.println(game.getWrong().toString());
-            System.out.println(game.getCorrect());
-            System.out.println("Guess a letter");
+            if(next) {
+                game.drawHangman();
+                System.out.println("Missed letters:");
+                System.out.println(game.getWrong().toString());
+                System.out.println(game.getCorrect());
+                System.out.println("Guess a letter");
+            }
 
             guess = scan.next().toLowerCase();
 
@@ -24,24 +27,27 @@ public class Main {
                 System.out.println("Please enter single letters only.");
                 guess = scan.next().toLowerCase();
             }
+
             if (game.checkUsed(guess.charAt(0))) {
                 System.out.println("You already tried that letter!");
                 System.out.println("Guess another letter");
-            }
-            else {
+                next = false;
+            } else {
                 winner = game.guessCheck(guess.charAt(0));
+                next = true;
             }
 
             if(winner){
                 System.out.println("You got the word!");
             }
             else if(game.getLives() == 0){
+                game.drawHangman();
                 System.out.println("You got hanged!");
             }
             if(winner || game.getLives() == 0){
                 System.out.println("Would you like to play again? (yes to go again, anything else to quit)");
-                guess = scan.nextLine();
-                if(guess.toLowerCase() != "yes")
+                guess = scan.next();
+                if(!guess.toLowerCase().equals("yes"))
                     playing = false;
                 else{
                     game.setUpGame();
