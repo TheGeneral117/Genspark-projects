@@ -23,25 +23,42 @@ public class Goblin {
     public void setHealth(int health) {
         this.health = health;
         if(health < 0)
-            health = 0;
+            this.health = 0;
         else if(health > maxHealth)
-            health = maxHealth;
+            this.health = maxHealth;
     }
 
     public void setPos(int moveX, int moveY, int size){
-        int x = pos[0], y = pos[1];
+        int x = moveX, y = moveY;
+
+        if(x < 0)
+            x=0;
+        if(x >= size)
+            x = size-1;
+
+        if(y < 0)
+            y=0;
+        if(y >= size)
+            y = size-1;
+
+        pos[0] = y;
+        pos[1] = x;
+    }
+
+    public void movePos(int moveX, int moveY, int size){
+        int y = pos[0], x = pos[1];
         x+=moveX;
         y+=moveY;
 
         if(x < 0)
             x=0;
-        if(x > size)
-            x = size;
+        if(x >= size)
+            x = size-1;
 
         if(y < 0)
             y=0;
-        if(y > size)
-            y = size;
+        if(y >= size)
+            y = size-1;
     }
 
     public int[] getPos(){
