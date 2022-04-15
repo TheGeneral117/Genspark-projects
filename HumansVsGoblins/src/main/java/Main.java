@@ -6,6 +6,7 @@ public class Main {
     public static void main(String[] args) {
         Land map = new Land();
         int size = map.getDimensions();
+        int killCount=0;
         //ArrayList<Goblin> goblins = new ArrayList<>();
         Goblin goblin = new Goblin(size);
         Human human = new Human(size);
@@ -70,17 +71,25 @@ public class Main {
                 else if(goblin.Alive() && combat)
                     next=false;
                 else if(!goblin.Alive() && combat){
+                    System.out.println("Congratulations, you have slayed the goblin!\nBut beware, another has appeared!");
+                    human.Heal();
                     next = true;
                     combat = false;
+                    killCount++;
                     goblin = new Goblin(size);
                 }
 
             }
-            System.out.printf("You have died after killing %d goblins! Would you like to play again? (y/n)\n");
+            System.out.printf("You have died after killing %d goblins! Would you like to play again? (y/n)\n", killCount);
             move = String.valueOf(scan.next().toLowerCase().charAt(0));
             if (move != "y") {
                 System.out.println("Thank you for playing!");
                 keepPlaying=false;
+                next = true;
+                combat = false;
+                killCount = 0;
+                goblin = new Goblin(size);
+                human = new Human(size);
             }
         }
     }

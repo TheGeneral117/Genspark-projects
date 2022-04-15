@@ -1,13 +1,13 @@
 public class Goblin {
     private int strength;
-    private int health;
+    private int health, maxHealth;
     private int[] pos = new int[]{0,0};
 
     public Goblin(int size){
         pos[0] = (int)(Math.random() * size);
         pos[1] = (int)(Math.random() * size);
         strength = (int)(Math.random() * 3) + 1;
-        health = (int)(Math.random() * 7) + 1;
+        health = maxHealth = (int)(Math.random() * 7) + 1;
     }
 
     public int getHealth() {
@@ -22,6 +22,10 @@ public class Goblin {
 
     public void setHealth(int health) {
         this.health = health;
+        if(health < 0)
+            health = 0;
+        else if(health > maxHealth)
+            health = maxHealth;
     }
 
     public void setPos(int moveX, int moveY, int size){

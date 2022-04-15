@@ -1,7 +1,7 @@
 public class Human{
 
-    private int health = 10;
-    private final int maxHealth = 10;
+    private int health = 1;
+    private final int maxHealth = 1;
     private int strength;
     private int[] pos = new int[]{0,0};
 
@@ -17,12 +17,21 @@ public class Human{
 
     public void setHealth(int health) {
         this.health = health;
+        if(health < 0)
+            health = 0;
+        else if(health > maxHealth)
+            health = maxHealth;
     }
 
     public void Heal(){
         int heal = (int)(Math.random()*4);
         health += heal;
-        System.out.printf("You healed for %d points, you have %d points remaining",heal,health);
+        if(health>maxHealth) {
+            health = maxHealth;
+            System.out.println("You healed to full health!");
+            return;
+        }
+        System.out.printf("You healed for %d points, you have %d points remaining\n",heal,health);
     }
 
     public int getStrength(){

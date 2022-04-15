@@ -64,8 +64,6 @@ public class Land {
     }
 
     public void combat(int pChoice, Goblin goblin, Human human){
-        if(pChoice == 4)
-            System.out.println("That is not a valid choice, the goblin gets the first swing!");
         int gChoice = goblin.combatChoice();
         int goblinDmg = (int)(goblin.getStrength() * Math.random());
         int humanDmg = (int)(human.getStrength() * Math.random());
@@ -75,29 +73,40 @@ public class Land {
             System.out.println("You were faster and got the first swing.");
             if(humanDmg == 0)
                 System.out.println("You missed your swing");
-            else
+            else {
                 goblin.setHealth(goblin.getHealth() - humanDmg);
+                System.out.printf("You dealt %d damage to the goblin, it has %d hp left\n", humanDmg, goblin.getHealth());
+            }
             if(human.Alive()) {
                 if (goblinDmg == 0)
                     System.out.println("The goblin missed their swing");
-                else
+                else {
                     human.setHealth(human.getHealth() - goblinDmg);
+                    System.out.printf("The goblin dealt %d damage to you, you have %d hp left\n", goblinDmg, human.getHealth());
+                }
             }
             return;
         }
-        else if((pChoice == 1 && gChoice == 3) || (pChoice == 3 && gChoice == 2) || (pChoice == 2 && gChoice == 1))
+        else if((pChoice == 1 && gChoice == 3) || (pChoice == 3 && gChoice == 2) || (pChoice == 2 && gChoice == 1) || pChoice == 4)
         {
-            System.out.println("You were slower and got hit first.");
+            if(pChoice == 4)
+                System.out.println("That is not a valid choice, the goblin gets the first swing!");
+            else
+                System.out.println("You were slower and got hit first.");
             if (goblinDmg == 0)
                 System.out.println("The goblin missed their swing");
-            else
+            else {
                 human.setHealth(human.getHealth() - goblinDmg);
+                System.out.printf("The goblin dealt %d damage to you, you have %d hp left\n", goblinDmg, human.getHealth());
+            }
 
             if(goblin.Alive()) {
                 if(humanDmg == 0)
                     System.out.println("You missed your swing");
-                else
+                else {
                     goblin.setHealth(goblin.getHealth() - humanDmg);
+                    System.out.printf("You dealt %d damage to the goblin, it has %d hp left\n", humanDmg, goblin.getHealth());
+                }
             }
             return;
         }
@@ -106,13 +115,17 @@ public class Land {
 
         if (goblinDmg == 0)
             System.out.println("The goblin missed their swing");
-        else
+        else {
             human.setHealth(human.getHealth() - goblinDmg);
+            System.out.printf("The goblin dealt %d damage to you, you have %d hp left\n", goblinDmg, human.getHealth());
+        }
         if(goblin.Alive()) {
             if(humanDmg == 0)
                 System.out.println("You missed your swing");
-            else
+            else {
                 goblin.setHealth(goblin.getHealth() - humanDmg);
+                System.out.printf("You dealt %d damage to the goblin, it has %d hp left\n", humanDmg, goblin.getHealth());
+            }
         }
     }
 
