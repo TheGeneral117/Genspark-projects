@@ -42,7 +42,7 @@ public class Main {
             }
             else if(game.getLives() == 0){
                 game.drawHangman();
-                System.out.println("You got hanged!");
+                System.out.println("You got hanged! The word was " + game.getAns());
             }
             if(winner || game.getLives() == 0){
                 System.out.println("Would you like to play again? (yes to go again, anything else to quit)");

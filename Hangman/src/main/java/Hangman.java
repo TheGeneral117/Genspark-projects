@@ -1,6 +1,11 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Hangman {
     private String ans;
@@ -10,18 +15,16 @@ public class Hangman {
     private char[] correct;
     private Random rand = new Random();
     private Scanner scan;
-    private ArrayList<String> list = new ArrayList<>();
+    private ArrayList<String> list;
     int lives;
 
     public Hangman() throws FileNotFoundException {
         try {
-            scan = new Scanner(new File("src/main/resources/hangmanWords.txt"));
-            while (scan.hasNext()) {
-                list.add(scan.nextLine());
-            }
+            list = new ArrayList<String> (Files.readAllLines(Path.of("src/main/resources/hangmanWords.txt")).stream()
+                    .collect(Collectors.toList()));
             setUpGame();
         }
-        catch (FileNotFoundException e){
+        catch (IOException e){
             System.out.println("File failed to load in class");
         }
     }
@@ -67,10 +70,8 @@ public class Hangman {
 
     private void extracted() {
         correct = new char[ans.length()];
-        for (int i = 0; i < ans.length(); i++) {
-            correct[i]='_';
-            answer.add(ans.charAt(i));
-        }
+        Arrays.fill(correct, '_');
+        answer = new ArrayList<Character>(ans.chars().mapToObj(c -> (char)c).collect(Collectors.toList()));
     }
 
     public void setAnswer(){
