@@ -14,7 +14,7 @@ public class Hangman {
     private Random rand = new Random();
     private Scanner scan;
     private ArrayList<String> list, hangmen;
-    private int lives, wins = -1;
+    private int lives, wins = 0;
 
     public Hangman() throws FileNotFoundException {
         try {
@@ -23,6 +23,8 @@ public class Hangman {
             hangmen = new ArrayList<String> (Files.readAllLines(Path.of("src/main/resources/hangmanFigures.txt")).stream()
                     .collect(Collectors.toList()));
             fix(0);
+
+            readWinners();
             setUpGame();
         }
         catch (IOException e){
@@ -46,12 +48,15 @@ public class Hangman {
         wrong.clear();
         used.clear();
         lives = 6;
-        wins++;
         setAnswer();
     }
 
     public int getWins(){
         return wins;
+    }
+
+    public void addWins(){
+        wins++;
     }
 
     public String getAns(){
@@ -132,12 +137,48 @@ public class Hangman {
             addLetters(i, guess);
     }
 
-    public boolean keepPlaying(){
+    public boolean biggestWinner(){
+        String value = Collections.max(winners.entrySet(), Map.Entry.comparingByValue()).getValue();
+        if(Integer.parseInt(value) < wins)
+            return true;
         return false;
     }
 
-    public void writeWinners(String name){
+    public boolean writeWinners(){
+        winners.put(name, String.valueOf(wins));
 
+        BufferedWriter br = null;
+        try {
+            br = new BufferedWriter(new FileWriter("src/main/resources/scores.txt"));
+
+            writeLine(br, winners.entrySet().iterator());
+
+            br.flush();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+
+            if (br != null) {
+                try {
+                    br.close();
+                }
+                catch (Exception e) {
+                };
+            }
+        }
+
+
+        return false;
+    }
+
+    private void writeLine(BufferedWriter br, Iterator<Map.Entry<String, String>> itr) throws IOException {
+        // put key and value separated by a colon
+        Map.Entry<String, String> entry = itr.next();
+        br.write(entry.getKey() + ":"
+                + entry.getValue());
+        br.newLine();
+        if(itr.hasNext())
+            writeLine(br, itr);
     }
 
     public void readWinners(){
@@ -147,7 +188,7 @@ public class Hangman {
         try {
 
             // create file object
-            File file = new File("src/main/resources/hangmanWords.txt");
+            File file = new File("src/main/resources/scores.txt");
 
             // create BufferedReader object from the File
             br = new BufferedReader(new FileReader(file));
@@ -160,7 +201,6 @@ public class Hangman {
         }
         finally {
 
-            // Always close the BufferedReader
             if (br != null) {
                 try {
                     br.close();
@@ -174,6 +214,8 @@ public class Hangman {
     private void readLine(BufferedReader br) throws IOException {
         String line;
         line = br.readLine();
+        if(line == null)
+            return;
 
         // split the line by :
         String[] parts = line.split(":");
@@ -187,8 +229,7 @@ public class Hangman {
         if (!name.equals("") && !number.equals(""))
             winners.put(name, number);
 
-        if(br.readLine() != null)
-            readLine(br);
+        readLine(br);
     }
 
     public void drawHangman() {

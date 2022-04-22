@@ -16,8 +16,9 @@ public class Main {
         game.setName(scan.next());
         System.out.println("Let's begin!");
 
-        
+
         while(playing){
+            
             if(next) {
                 game.drawHangman();
                 System.out.println("Missed letters:");
@@ -44,16 +45,24 @@ public class Main {
 
             if(winner){
                 System.out.println("You got the word!");
+                game.addWins();
             }
             else if(game.getLives() == 0){
                 game.drawHangman();
-                System.out.println("You got hanged! The word was " + game.getAns());
+                System.out.println("You got hanged! The word was " + game.getAns() + ". You got a total of "
+                        + game.getWins() + " words correct!");
             }
             if(winner || game.getLives() == 0){
+                if(game.biggestWinner())
+                    System.out.println("New High Score!");
+                else
+                    System.out.println("You did not get a new high score");
                 System.out.println("Would you like to play again? (yes to go again, anything else to quit)");
                 guess = scan.next();
-                if(!guess.toLowerCase().equals("yes"))
+                if(!guess.toLowerCase().equals("yes")) {
                     playing = false;
+                    game.writeWinners();
+                }
                 else{
                     game.setUpGame();
                     winner = false;
