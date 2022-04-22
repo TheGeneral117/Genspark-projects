@@ -14,18 +14,29 @@ public class Hangman {
     private char[] correct;
     private Random rand = new Random();
     private Scanner scan;
-    private ArrayList<String> list;
+    private ArrayList<String> list, hangmen;
     private int lives;
 
     public Hangman() throws FileNotFoundException {
         try {
             list = new ArrayList<String> (Files.readAllLines(Path.of("src/main/resources/hangmanWords.txt")).stream()
                     .collect(Collectors.toList()));
+            hangmen = new ArrayList<String> (Files.readAllLines(Path.of("src/main/resources/hangmanFigures.txt")).stream()
+                    .collect(Collectors.toList()));
+            fix(0);
             setUpGame();
         }
         catch (IOException e){
             System.out.println("File failed to load in class");
         }
+    }
+
+    private void fix(int i){
+        String hold = hangmen.get(i);
+        hold = hold.replace("\\\\n", "\n").replace("\\\\t", "\t");
+        hangmen.set(i, hold);
+        if(++i != hangmen.size())
+            fix(i);
     }
 
     public void setUpGame(){
@@ -106,7 +117,7 @@ public class Hangman {
         return false;
     }
 
-    public void addLetters(int i, char guess){
+    private void addLetters(int i, char guess){
         if(answer.get(i).equals(guess))
             correct[i] = guess;
         if(++i != correct.length)
@@ -118,6 +129,7 @@ public class Hangman {
     }
 
     public void drawHangman() {
+        /*
         switch (lives){
             case 6:
                 System.out.println(""
@@ -181,6 +193,30 @@ public class Hangman {
                         +"\t|   / \\\n"
                         +"\t|\n"
                         +"\t*************");
+        }
+         */
+        switch (lives){
+            case 6:
+                System.out.println(hangmen.get(0));
+                break;
+            case 5:
+                System.out.println(hangmen.get(1));
+                break;
+            case 4:
+                System.out.println(hangmen.get(2));
+                break;
+            case 3:
+                System.out.println(hangmen.get(3));
+                break;
+            case 2:
+                System.out.println(hangmen.get(4));
+                break;
+            case 1:
+                System.out.println(hangmen.get(5));
+                break;
+            default:
+                System.out.println(hangmen.get(6));
+                break;
         }
     }
 
