@@ -18,7 +18,7 @@ public class Main {
 
 
         while(playing){
-            
+
             if(next) {
                 game.drawHangman();
                 System.out.println("Missed letters:");
