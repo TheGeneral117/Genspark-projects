@@ -1,13 +1,12 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Hangman {
-    private String ans;
+    private String ans, name;
+    Map<String, String> winners = new HashMap<String, String>();
     private ArrayList<Character> answer = new ArrayList<>();
     private ArrayList<Character> wrong = new ArrayList<>();
     private ArrayList<Character> used = new ArrayList<>();
@@ -15,7 +14,7 @@ public class Hangman {
     private Random rand = new Random();
     private Scanner scan;
     private ArrayList<String> list, hangmen;
-    private int lives;
+    private int lives, wins = -1;
 
     public Hangman() throws FileNotFoundException {
         try {
@@ -31,6 +30,10 @@ public class Hangman {
         }
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
     private void fix(int i){
         String hold = hangmen.get(i);
         hold = hold.replace("\\\\n", "\n").replace("\\\\t", "\t");
@@ -43,7 +46,12 @@ public class Hangman {
         wrong.clear();
         used.clear();
         lives = 6;
+        wins++;
         setAnswer();
+    }
+
+    public int getWins(){
+        return wins;
     }
 
     public String getAns(){
@@ -128,73 +136,62 @@ public class Hangman {
         return false;
     }
 
-    public void drawHangman() {
-        /*
-        switch (lives){
-            case 6:
-                System.out.println(""
-                        +"\t|----------\n"
-                        +"\t|\n"
-                        +"\t|\n"
-                        +"\t|\n"
-                        +"\t|\n"
-                        +"\t*************");
-                break;
-            case 5:
-                System.out.println(""
-                        +"\t|----------\n"
-                        +"\t|    O\n"
-                        +"\t|\n"
-                        +"\t|\n"
-                        +"\t|\n"
-                        +"\t*************");
-                break;
-            case 4:
-                System.out.println(""
-                        +"\t|----------\n"
-                        +"\t|     O\n"
-                        +"\t|     |\n"
-                        +"\t|\n"
-                        +"\t|\n"
-                        +"\t*************");
-                break;
-            case 3:
-                System.out.println(""
-                        +"\t|----------\n"
-                        +"\t|    O\n"
-                        +"\t|   \\|\n"
-                        +"\t|\n"
-                        +"\t|\n"
-                        +"\t*************");
-                break;
-            case 2:
-                System.out.println(""
-                        +"\t|----------\n"
-                        +"\t|    O\n"
-                        +"\t|   \\|/\n"
-                        +"\t|\n"
-                        +"\t|\n"
-                        +"\t*************");
-                break;
-            case 1:
-                System.out.println(""
-                        +"\t|----------\n"
-                        +"\t|    O\n"
-                        +"\t|   \\|/\n"
-                        +"\t|   /\n"
-                        +"\t|\n"
-                        +"\t*************");
-                break;
-            default:
-                System.out.println(""
-                        +"\t|----------\n"
-                        +"\t|    O\n"
-                        +"\t|   \\|/\n"
-                        +"\t|   / \\\n"
-                        +"\t|\n"
-                        +"\t*************");
+    public void writeWinners(String name){
+
+    }
+
+    public void readWinners(){
+
+        BufferedReader br = null;
+
+        try {
+
+            // create file object
+            File file = new File("src/main/resources/hangmanWords.txt");
+
+            // create BufferedReader object from the File
+            br = new BufferedReader(new FileReader(file));
+
+            // read file line by line
+            readLine(br);
         }
-         */
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+
+            // Always close the BufferedReader
+            if (br != null) {
+                try {
+                    br.close();
+                }
+                catch (Exception e) {
+                };
+            }
+        }
+    }
+
+    private void readLine(BufferedReader br) throws IOException {
+        String line;
+        line = br.readLine();
+
+        // split the line by :
+        String[] parts = line.split(":");
+
+        // first part is name, second is number
+        String name = parts[0].trim();
+        String number = parts[1].trim();
+
+        // put name, number in HashMap if they are
+        // not empty
+        if (!name.equals("") && !number.equals(""))
+            winners.put(name, number);
+
+        if(br.readLine() != null)
+            readLine(br);
+    }
+
+    public void drawHangman() {
         switch (lives){
             case 6:
                 System.out.println(hangmen.get(0));

@@ -11,7 +11,12 @@ public class Main {
         boolean winner = false, playing = true, next = true;
 
         System.out.println("Welcome to Hangman! Let's play!\n\n");
-        System.out.println(game.getAns());
+
+        System.out.println("What is your name?");
+        game.setName(scan.next());
+        System.out.println("Let's begin!");
+
+        
         while(playing){
             if(next) {
                 game.drawHangman();
