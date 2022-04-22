@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Hangman {
     private String ans;
@@ -16,7 +15,7 @@ public class Hangman {
     private Random rand = new Random();
     private Scanner scan;
     private ArrayList<String> list;
-    int lives;
+    private int lives;
 
     public Hangman() throws FileNotFoundException {
         try {
@@ -83,22 +82,35 @@ public class Hangman {
 
     public boolean guessCheck(char guess){
         guess = Character.toLowerCase(guess);
+        // correct guess
         if(answer.contains(guess)) {
-            for (int i = 0; i < answer.size(); i++) {
-                if(answer.get(i) == guess)
-                    correct[i] = guess;
-            }
+            char finalGuess = guess;
+
+            // fill in matching letters
+            addLetters(0, finalGuess);
+
+            // if all letters guessed
             if(!new String(correct).contains("_"))
                 return true;
         }
+        // wrong guess
         else {
             lives--;
             if(!wrong.contains(guess))
                 wrong.add(guess);
         }
+
+        // if letter not used
         if(!used.contains(guess))
             used.add(guess);
         return false;
+    }
+
+    public void addLetters(int i, char guess){
+        if(answer.get(i).equals(guess))
+            correct[i] = guess;
+        if(++i != correct.length)
+            addLetters(i, guess);
     }
 
     public boolean keepPlaying(){
